@@ -4,9 +4,12 @@ import java.util.List;
 
 public class Lion {
 
-    boolean hasMane;
+    private boolean hasMane;
+    private Feline feline; // Поле для инъекции зависимости
 
-    public Lion(String sex, Feline mockFeline) throws Exception {
+    public Lion(String sex, Feline feline) throws Exception {
+        this.feline = feline; // Инъекция зависимости через конструктор
+
         if ("Самец".equals(sex)) {
             hasMane = true;
         } else if ("Самка".equals(sex)) {
@@ -16,10 +19,8 @@ public class Lion {
         }
     }
 
-    public Feline feline = new Feline();
-
     public int getKittens() {
-        return feline.getKittens();
+        return feline.getKittens(); // Использование инъекционного экземпляра
     }
 
     public boolean doesHaveMane() {
@@ -27,6 +28,6 @@ public class Lion {
     }
 
     public List<String> getFood() throws Exception {
-        return feline.getFood("Хищник");
+        return feline.getFood("Хищник"); // Использование инъекционного экземпляра
     }
 }

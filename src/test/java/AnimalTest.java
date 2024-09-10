@@ -1,60 +1,54 @@
 import com.example.Animal;
 import org.junit.Test;
-import org.mockito.Mockito;
-import java.util.ArrayList;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertThrows;
 
+@RunWith(Parameterized.class)
 public class AnimalTest {
+    private final String inputAnimalKind;
+    private final List<String> expectedFood;
+    private final boolean shouldThrowException;
+
+    public AnimalTest(String inputAnimalKind, List<String> expectedFood, boolean shouldThrowException) {
+        this.inputAnimalKind = inputAnimalKind;
+        this.expectedFood = expectedFood;
+        this.shouldThrowException = shouldThrowException;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {"Травоядное", List.of("Трава", "Различные растения"), false},
+                {"Хищник", List.of("Животные", "Птицы", "Рыба"), false},
+                {"Неизвестный", null, true}
+        });
+    }
 
     @Test
-    public void testGetFoodForHerbivore() throws Exception {
-        // Создание объекта Animal
-        Animal animal = Mockito.spy(new Animal());
-        // Создание мока для списка
-        List<String> foodList = mock(List.class);
-        // Установка ожидаемого поведения для метода iterator() макета foodList
-        Iterator<String> iterator = mock(Iterator.class);
-        when(foodList.iterator()).thenReturn(iterator);
-        // Установка ожидаемого поведения для методов hasNext() и next() итератора
-        when(iterator.hasNext())
-                .thenReturn(true) // Первый вызов hasNext()
-                .thenReturn(true) // Второй вызов hasNext()
-                .thenReturn(false); // Третий вызов hasNext()
-        when(iterator.next())
-                .thenReturn("Трава") // Первый вызов next()
-                .thenReturn("Различные растения"); // Второй вызов next()
-        // Установка ожидаемого поведения для метода getFood() объекта Animal
-        when(animal.getFood("Травоядное")).thenReturn(foodList);
-        // Выполнение метода getFood() объекта Animal
-        List<String> result = animal.getFood("Травоядное");
-        // Проверка результата
-        List<String> expected = new ArrayList<>();
-        expected.add("Трава");
-        expected.add("Различные растения");
-        assertEquals(expected, result);
-    }
-    @Test
-    public void testGetFoodForCarnivore() throws Exception {
-        Animal animal = mock(Animal.class);
-        List<String> expectedFoodList = Arrays.asList("Животные", "Птицы", "Рыба");
-        when(animal.getFood("Хищник")).thenReturn(expectedFoodList);
-        assertEquals(expectedFoodList, animal.getFood("Хищник"));
-    }
-    @Test
-    public void testGetFoodForUnknownAnimal() {
-        // Создание объекта Animal
+    public void testGetFood() throws Exception {
         Animal animal = new Animal();
-        // Проверка на выброс исключения
-        try {
-            animal.getFood("Неизвестный");
-        } catch (Exception e) {
-            assertEquals("Неизвестный вид животного, используйте значение Травоядное или Хищник", e.getMessage());
+
+        if (shouldThrowException) {
+            Exception exception = assertThrows(Exception.class, () -> {
+                animal.getFood(inputAnimalKind);
+            });
+            assertEquals("Неизвестный вид животного, используйте значение Травоядное или Хищник", exception.getMessage());
+        } else {
+            assertEquals(expectedFood, animal.getFood(inputAnimalKind));
         }
+    }
+
+    @Test
+    public void testGetFamily() {
+        Animal animal = new Animal();
+        String expected = "Существует несколько семейств: заячьи, беличьи, мышиные, кошачьи, псовые, медвежьи, куньи";
+        assertEquals(expected, animal.getFamily());
     }
 }

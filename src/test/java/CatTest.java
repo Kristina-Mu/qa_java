@@ -1,31 +1,24 @@
 import com.example.Cat;
 import com.example.Feline;
-import org.mockito.Mockito;
-import java.util.List;
 import org.junit.Test;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class CatTest {
+
     @Test
     public void testGetSound() {
-        // Создание объекта Cat
-        Cat cat = new Cat(Mockito.mock(Feline.class));
-        // Проверка результата
-        String result = cat.getSound();
-        assertEquals("Мяу", result);
+        Feline feline = new Feline();
+        Cat cat = new Cat(feline);
+        assertEquals("Мяу", cat.getSound());
     }
+
     @Test
     public void testGetFood() throws Exception {
-        // Создание мока для объекта Feline
-        Feline feline = Mockito.mock(Feline.class);
-        // Создание объекта Cat с мок-объектом Feline
+        Feline feline = new Feline();
         Cat cat = new Cat(feline);
-        // Создание мока для списка
-        List<String> foodList = Mockito.mock(List.class);
-        // Установка ожидаемого поведения для метода eatMeat() объекта Feline
-        Mockito.when(feline.eatMeat()).thenReturn(foodList);
-        // Проверка результата
-        List<String> result = cat.getFood();
-        assertEquals(foodList, result);
+        List<String> expected = feline.eatMeat(); // Используем реальное поведение
+        assertEquals(expected, cat.getFood());
     }
 }
