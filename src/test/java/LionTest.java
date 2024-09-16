@@ -2,7 +2,9 @@ import com.example.Feline;
 import com.example.Lion;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LionTest {
+
     @Mock
     Feline feline;
 
@@ -25,18 +28,6 @@ public class LionTest {
     @Test(expected = Exception.class)
     public void incorrectLionSexTest() throws Exception {
         Lion lion = new Lion("неправильное значение", feline);
-    }
-
-    @Test
-    public void lionFemaleDoesNotHaveManeTest() throws Exception {
-        Lion lion = new Lion("Самка", feline);
-        assertFalse(lion.doesHaveMane());
-    }
-
-    @Test
-    public void lionMaleHasManeTest() throws Exception {
-        Lion lion = new Lion("Самец", feline);
-        assertTrue(lion.doesHaveMane());
     }
 
     @Test

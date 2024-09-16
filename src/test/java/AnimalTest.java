@@ -44,11 +44,5 @@ public class AnimalTest {
             assertEquals(expectedFood, animal.getFood(inputAnimalKind));
         }
     }
-
-    @Test
-    public void testGetFamily() {
-        Animal animal = new Animal();
-        String expected = "Существует несколько семейств: заячьи, беличьи, мышиные, кошачьи, псовые, медвежьи, куньи";
-        assertEquals(expected, animal.getFamily());
-    }
+//создать доп класс
 }

@@ -24,4 +24,11 @@ public class Feline extends Animal implements Predator {
         }
         return kittensCount;
     }
+
+   public List<String> getFood(String type) {
+        if ("Хищник".equals(type)) {
+            return List.of("мясо", "птицы", "рыба"); // Возвращаем нужные продукты для хищника
+        }
+        return List.of();
+    }
 }
