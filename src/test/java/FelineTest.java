@@ -1,4 +1,5 @@
-import com.example.Feline;
+package com.example;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -18,9 +19,10 @@ public class FelineTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {
-                {0},       // Должно выбросить IllegalArgumentException
-                {-1}       // Должно выбросить IllegalArgumentException
+        return Arrays.asList(new Object[][]{
+                {1},       // Корректное количество котят
+                {2},       // Корректное количество котят
+                {3}        // Корректное количество котят
         });
     }
 
@@ -28,27 +30,7 @@ public class FelineTest {
     public void testGetKittens() {
         Feline feline = new Feline();
 
-            assertThrows(IllegalArgumentException.class, () -> {
-                feline.getKittens(inputCount);
-            });
+        // Проверяем, что количество котят совпадает
+        assertEquals(inputCount, feline.getKittens(inputCount));
     }
-
-//    @Test
-//    public void testGetKittensWithValidCount() {
-//        Feline feline = new Feline();
-//        assertEquals(3, feline.getKittens(3)); // Корректное значение
-//    }
-//
-//    @Test
-//    public void testGetFamily() {
-//        Feline feline = new Feline();
-//        String expectedFamily = "Кошачьи"; // Ожидаемое значение
-//        assertEquals(expectedFamily, feline.getFamily()); // Проверка на равенство
-//    }
-//
-//    @Test
-//    public void testGetKittensWithDefaultCount() {
-//        Feline feline = new Feline();
-//        assertEquals(1, feline.getKittens()); // Метод без параметров должен возвращать 1
-//    }
 }

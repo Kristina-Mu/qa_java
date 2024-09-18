@@ -44,5 +44,4 @@ public class AnimalTest {
             assertEquals(expectedFood, animal.getFood(inputAnimalKind));
         }
     }
-//создать доп класс
 }

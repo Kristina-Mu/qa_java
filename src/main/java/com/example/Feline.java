@@ -15,20 +15,11 @@ public class Feline extends Animal implements Predator {
     }
 
     public int getKittens() {
-        return getKittens(1); // по умолчанию 1 котенок
+        return getKittens(1);
     }
 
     public int getKittens(int kittensCount) {
-        if (kittensCount < 1) {
-            throw new IllegalArgumentException("Количество котят должно быть больше 0");
-        }
         return kittensCount;
     }
 
-   public List<String> getFood(String type) {
-        if ("Хищник".equals(type)) {
-            return List.of("мясо", "птицы", "рыба"); // Возвращаем нужные продукты для хищника
-        }
-        return List.of();
-    }
 }
